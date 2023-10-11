@@ -11,9 +11,9 @@
     <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/album/">
 
     
-
+    <link href="my.css" rel="stylesheet">
     <!-- Bootstrap core CSS -->
-<link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- <link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
       .bd-placeholder-img {
@@ -46,7 +46,7 @@
       .container {
         max-width: 960px;
       }
-    </style>
+    </style> -->
 
     <script>
       // Example starter JavaScript for disabling form submissions if there are invalid fields
@@ -70,10 +70,33 @@
           })
       })()
 
-      document.getElementById("newCatForm").addEventListener("submit", addAlert);
 
-      function addAlert(){
-        alert("KOR:게시물이 추가됩니다!\nENG:Your cat is now added!")
+      function myFunc(){
+        var isOk = confirm("게시물을 수정할까요?");
+        if(isOk == true){
+          alert("KOR:정보가 수정되었습니다!\nENG:Changes have been saved!");
+          // document.getElementById("newCatForm").addEventListener("submit", addAlert);
+        }
+        else {
+          alert("수정이 취소 되었습니다");
+          return false;
+          
+          // window.location.href = "view1.html";
+          // document.history.back();
+          // document.hisstory.back();
+          window.location.replace('view1.html');
+          window.location.assign("view1.html");
+          // need to fix this func.... hmm... -> Would be able to check after making submission php file
+        }
+      }
+    
+      // document.getElementById("newCatForm").addEventListener("submit", addAlert);
+
+      function addAlert(isOk){
+        if(isOk == true)
+          alert("KOR:정보가 수정되었습니다!\nENG:Changes have been saved!");
+        else 
+          alert("수정 취소");
       }
     </script>
 
@@ -117,15 +140,14 @@
 
     <section class="py-5 text-center container">
         <div class="row py-lg-5">
-            <img src = "./assets/img/calico.jpeg" width = 80%>
-          <!-- <div class="col-lg-6 col-md-8 mx-auto">
-            <h1 class="fw-light">Add Your Cat</h1>
+          <div class="col-lg-6 col-md-8 mx-auto">
+            <h1 class="fw-light">Edit Cat Information</h1>
             <p class="lead text-muted">Please fill the form down below</p>
             <p>
-              <a href="add.html" class="btn btn-primary my-2">Reset</a>
+              <a href="edit9.html" class="btn btn-primary my-2">Revert to Original</a>
               <a href="index.html" class="btn btn-secondary my-2">Go Back Home</a>
             </p>
-          </div> -->
+          </div>
         </div>
       </section>
 
@@ -137,6 +159,8 @@
             <h2>Checkout form</h2>
             <p class="lead">Below is an example form built entirely with Bootstrap’s form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p>
           </div> -->
+      
+        <form id = "newCatForm" action = "action_page.php"  onsubmit="myFunc()"> 
           <div class="row g-5">
             
             <!-- <div class="col-md-10 col-lg-10"> -->
@@ -146,101 +170,124 @@
                 <div class="row g-3">
                   <div class="col-sm-4">
                     <label for="firstName" class="form-label">Cat Name</label>
-                    <h6 class="my-0">Patches</h6>
+                    <input type="text" class="form-control" id="firstName" placeholder="" value="Cupcake" required>
+                    <div class="invalid-feedback">
+                      Valid cat name is required.
+                    </div>
                   </div>
       
                   <div class="col-sm-4">
                     <label for="lastName" class="form-label">Breed</label>
-                    <h6 class="my-0">Calico</h6>
+                    <input type="text" class="form-control" id="lastName" placeholder="" value="Exotic Shorthair" required>
+                    <div class="invalid-feedback">
+                      Valid breed name is required.
+                    </div>
                   </div>
 
                   <div class="col-md-4">
                     <label for="catGender" class="form-label">Gender</label>
-                    <h6 class="my-0">Molly</h6>
+                    <select class="form-select" id="catGender" required>
+                      <option value="">Choose...</option>
+                      <option >Tom</option>
+                      <option >Gib</option>
+                      <option selected>Queen</option>
+                      <option >Molly</option>
+                    </select>
+                    <div class="invalid-feedback">
+                      Please provide a valid gender.
+                    </div>
                   </div>
       
                   <div class="col-12">
                     <label for="RegistrationID" class="form-label">Registration ID</label>
-                    <h6 class="my-0">CAT-2023-A</h6>
+                    <div class="input-group has-validation">
+                      <span class="input-group-text">KOR</span>
+                      <input type="text" class="form-control" id="RegistrationID" value = "KITTY-XYZ1" placeholder="Your Cat's Registration Number" required>
+                    <div class="invalid-feedback">
+                        Cat's Registration ID is required.
+                      </div>
+                    </div>
                   </div>
 
-                  <br><br><br>
+                  <div class="col-12">
+                    <label for="CatPic" class="form-label">Picture <span class="text-muted">(of your cat)</span></label>
+                    <input type="file" class="form-control" id="CatPic">
+                    <div class="invalid-feedback">
+                      Please submit a valid file
+                    </div>
+                  </div>
+
+                  <br><br><br><br>
                   <div class="b-example-divider"></div>
                   <h4 class="mb-3">Owner Info</h4>
       
                   <div class="col-12">
                     <label for="email" class="form-label">Email <span class="text-muted">(Commercial or Business)</span></label>
-                    <li class="list-group-item d-flex justify-content-between lh-sm">
-                        <div>
-                          <h6 class="my-0">BiatchesGetPatches@gmail.com</h6>
-                        </div>
-                      </li>
+                    <input type="email" class="form-control" id="email" value = "UglyCuteCat@gmail.com" placeholder="you@example.com">
+                    <div class="invalid-feedback">
+                      Please enter a valid email address
+                    </div>
                   </div>
       
                   <div class="col-12">
                     <label for="address" class="form-label">Address</label>
-                    <li class="list-group-item d-flex justify-content-between lh-sm">
-                        <div>
-                          <h6 class="my-0">123 Main St</h6>
-                        </div>
-                      </li>
+                    <input type="text" class="form-control" id="address" value = "123 Ugly St" placeholder="1234 Main St" required>
+                    <div class="invalid-feedback">
+                      Please enter your address.
+                    </div>
                   </div>
       
                   <div class="col-12">
                     <label for="address2" class="form-label">Address 2 <span class="text-muted">(Optional)</span></label>
-                    <li class="list-group-item d-flex justify-content-between lh-sm">
-                        <div>
-                          <h6 class="my-0">ABC APT #301-1401</h6>
-                        </div>
-                    </li>
+                    <input type="text" class="form-control" id="address2" value = "ABC APT #106-1401" placeholder="Apartment or suite">
                   </div>
       
                   <div class="col-md-5">
                     <label for="country" class="form-label">Country</label>
-                    <li class="list-group-item d-flex justify-content-between lh-sm">
-                        <div>
-                          <h6 class="my-0">Republic of Korea</h6>
-                        </div>
-                    </li>
+                    <select class="form-select" id="country" required>
+                      <option value="">Choose...</option>
+                      <option selected>Republic of Korea</option>
+                    </select>
+                    <div class="invalid-feedback">
+                      Please select a valid country.
+                    </div>
                   </div>
       
                   <div class="col-md-4">
                     <label for="province" class="form-label">Province</label>
-                    <li class="list-group-item d-flex justify-content-between lh-sm">
-                        <div>
-                          <h6 class="my-0">Gyeongsangbuk-do</h6>
-                        </div>
-                    </li>
+                    <select class="form-select" id="province" required>
+                      <option value="">Choose...</option>
+                      <option selected>Gyeongsangbuk-do</option>
+                    </select>
+                    <div class="invalid-feedback">
+                      Please provide a valid province.
+                    </div>
                   </div>
       
                   <div class="col-md-3">
                     <label for="postalCode" class="form-label">Postal Code</label>
-                    <li class="list-group-item d-flex justify-content-between lh-sm">
-                        <div>
-                          <h6 class="my-0">94344</h6>
-                        </div>
-                    </li>
+                    <input type="text" class="form-control" id="postalCode" value = "96355" placeholder="" required>
+                    <div class="invalid-feedback">
+                      Postal code required.
+                    </div>
                   </div>
                 </div>
 
-                <!-- <hr class="my-4">
-                <div class="col-lg-10 col-md-10 mx-auto">
-                    <p>
-                      <a href="edit1.html" class="w-80 btn btn-primary my-2">Edit</a>
-                      <a href="index.html" class="btn btn-secondary my-2">Delete</a>
-                    </p>
-                </div> -->
-                
                 <br>
-                    
-                <a href="edit6.html" class="w-100 btn btn-light btn-lg">Edit</a>
-                <button class = "w-100 btn btn-danger btn-lg" onclick = "confirm('게시물을 삭제할까요?')">Delete</button>  
-                <br><br>
-                <a href="index.html" class="w-100 btn btn-success btn-lg">Go Back Home</a>
-            </form>
+
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="save-info">
+                  <label class="form-check-label" for="save-info">Save this information for next time</label>
+                </div>
+      
+                <hr class="my-4">
+                <!--onclick = "myFunc" <--- this wasn't necessary -->
+                <button class="w-100 btn btn-primary btn-lg" type="submit" >Save Changes</button>
+              </form>
             </div>
           </div>
         </main>
+      </form>
       </div>
     </body>
   
